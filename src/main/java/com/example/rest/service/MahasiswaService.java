@@ -1,5 +1,6 @@
 package com.example.rest.service;
 
+import com.example.rest.model.Jurusan;
 import com.example.rest.model.Mahasiswa;
 import com.example.rest.repository.MahasiswaRepository;
 import com.example.rest.repository.SubJurusanRepository;
@@ -19,25 +20,28 @@ public class MahasiswaService {
 
     // CREATE
     public Mahasiswa createMahasiswa(Mahasiswa mahasiswa) {
-        return mahasiswaRepository.save(mahasiswa);
-//        Mahasiswa result = new Mahasiswa();
-//        try {
-//            result = mahasiswaRepository.save(mahasiswa);
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return result;
+        Mahasiswa result = new Mahasiswa();
+        try {
+            result = mahasiswaRepository.save(mahasiswa);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
     // READ
     public List<Mahasiswa> getMahasiswa() {
         List<Mahasiswa> result = mahasiswaRepository.findAll();
+        for (Mahasiswa j: result ) {
+            j.setSubJurusan(subJurusanRepository.findById(j.getSubJurusanId() == null ? null : j.getSubJurusanId()).orElse(null));
+        }
         return result;
     }
 
     // DELETE
     public String deleteMahasiswa(String id) {
-        mahasiswaRepository.deleteById(id);
+        Mahasiswa mahasiswa = mahasiswaRepository.getByID(id);
+        mahasiswaRepository.delete(mahasiswa);
         return "Removed !! " + id;
     }
 

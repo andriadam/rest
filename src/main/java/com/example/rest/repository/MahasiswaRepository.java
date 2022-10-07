@@ -21,7 +21,4 @@ public interface MahasiswaRepository extends JpaRepository<Mahasiswa, Long> {
     @Query("select c from Mahasiswa c")
     Page<Mahasiswa> getAllData(Pageable pageable);
 
-    @Modifying
-    @Query("delete from Mahasiswa c WHERE c.id =: id")
-    List<Mahasiswa> deleteById(@Param("id") String id);
 }

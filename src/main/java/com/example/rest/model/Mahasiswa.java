@@ -22,4 +22,7 @@ public class Mahasiswa implements Serializable {
 
     @Column(name="sub_jurusan_id", nullable = false, length = 10)
     private Long subJurusanId;
+
+    @Column(columnDefinition = "BLOB")
+    private SubJurusan subJurusan;
 }
